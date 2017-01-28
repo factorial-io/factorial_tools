@@ -1,13 +1,24 @@
 <?php
 
 /**
+ * @file
  * Helper functions for deployment.
  */
 
 define('FACTORIAL_TOOLS_BATCH_LIMIT', 10);
 
 /**
- * Delete all entities of a given type and bundle.
+ * Delete all entities of a given entity type.
+ *
+ * @param array $sandbox
+ *   The $sandbox variable passed to hook_update_N.
+ * @param string $entity_type
+ *   The entity type machine name.
+ * @param array $conditions
+ *   Various conditions supported by entityQuery.
+ *
+ * @return string
+ *   Return value to be used for hook_update_N.
  */
 function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = array()) {
   if (!isset($sandbox['progress'])) {
@@ -22,7 +33,6 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
     $sandbox['max'] = $query->count()->execute();
     $sandbox['messages'] = array();
   }
-
 
   $query = \Drupal::entityQuery($entity_type);
   if ($conditions) {
