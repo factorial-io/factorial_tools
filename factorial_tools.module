@@ -22,24 +22,13 @@ define('FACTORIAL_TOOLS_BATCH_LIMIT', 10);
  */
 function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = array()) {
   if (!isset($sandbox['progress'])) {
-    $query = \Drupal::entityQuery($entity_type);
-    if ($conditions) {
-      foreach ($conditions as $key => $value) {
-        $query->condition($key, $value);
-      }
-    }
-
+    $query = _factorial_tools_create_entity_query($entity_type, $conditions);
     $sandbox['progress'] = 0;
     $sandbox['max'] = $query->count()->execute();
     $sandbox['messages'] = array();
   }
 
-  $query = \Drupal::entityQuery($entity_type);
-  if ($conditions) {
-    foreach ($conditions as $key => $value) {
-      $query->condition($key, $value);
-    }
-  }
+  $query = _factorial_tools_create_entity_query($entity_type, $conditions);
   $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
   $entity_ids = $query->execute();
   $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
@@ -55,4 +44,23 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 
+}
+
+/**
+ * Helper function to create entityQuery.
+ */
+function _factorial_tools_create_entity_query($entity_type, $conditions = array()) {
+  $query = \Drupal::entityQuery($entity_type);
+  if ($conditions) {
+    foreach ($conditions as $condition) {
+      list($field, $arg, $op) = $condition;
+      if ($op === NULL) {
+        $query->condition($field, $arg);
+      }
+      else {
+        $query->condition($field, $arg, $op);
+      }
+    }
+  }
+  return $query;
 }
