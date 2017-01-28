@@ -1,10 +1,12 @@
 # factorial_tools
 Drupal Module that provides various commonly used helper functions
 
-Usage# 
+# Usage
 
+## 1. Mass entity delete
 To delete all entities of particular typ e use `factorial_tools_entities_delete()`
-Example:
+
+*Example*
 ```php
 /**
  * Delete all nodes.
