@@ -1,0 +1,4 @@
+name: Factorial Tools
+type: module
+description: 'Provides various commonly used helper functions for deployment.'
+core: '8.x'
