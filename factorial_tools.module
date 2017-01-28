@@ -4,3 +4,45 @@
  * Helper functions for deployment.
  */
 
+define('FACTORIAL_TOOLS_BATCH_LIMIT', 10);
+
+/**
+ * Delete all entities of a given type and bundle.
+ */
+function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = array()) {
+  if (!isset($sandbox['progress'])) {
+    $query = \Drupal::entityQuery($entity_type);
+    if ($conditions) {
+      foreach ($conditions as $key => $value) {
+        $query->condition($key, $value);
+      }
+    }
+
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = $query->count()->execute();
+    $sandbox['messages'] = array();
+  }
+
+
+  $query = \Drupal::entityQuery($entity_type);
+  if ($conditions) {
+    foreach ($conditions as $key => $value) {
+      $query->condition($key, $value);
+    }
+  }
+  $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
+  $entity_ids = $query->execute();
+  $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
+  $entities = $storage_handler->loadMultiple($ids);
+  $storage_handler->delete($entities);
+  $sandbox['progress'] += count($entity_ids);
+
+  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
+    ? TRUE
+    : ($sandbox['progress'] / $sandbox['max']);
+
+  if ($sandbox['#finished']) {
+    return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
+  }
+
+}
