@@ -4,7 +4,7 @@ Drupal Module that provides various commonly used helper functions
 # Usage
 
 ## 1. Mass entity delete
-To delete all entities of particular typ e use `factorial_tools_entities_delete()`
+To delete all entities of particular type use `factorial_tools_entities_delete()`
 
 *Examples*
 ```php
@@ -37,9 +37,9 @@ function mysite_deploy_update_8003(&$sandbox) {
 }
 ```
 
-*Optionally we have a helper function to delete entities by providing a entityQuery,*
+*Optionally we have a helper function to delete entities by providing an entityQuery,*
 
-```
+```php
 /**
  * Delete all users except Anonymous and Super Admin.
  */
