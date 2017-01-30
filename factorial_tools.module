@@ -6,6 +6,46 @@
  */
 
 define('FACTORIAL_TOOLS_BATCH_LIMIT', 10);
+use \Drupal\Core\Entity\Query\QueryInterface;
+
+/**
+ * Delete all entities that can be loaded using given query.
+ *
+ * @param array $sandbox
+ *   The $sandbox variable passed to hook_update_N.
+ * @param QueryInterface $query
+ *   The query used to find ids of the entities to be deleted.
+ * @param QueryInterface $count_query
+ *   Optional count query to be used for finding maximum number of entities.
+ *
+ * @return string
+ *   Return value to be used for hook_update_N.
+ */
+function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $query, QueryInterface $count_query = NULL) {
+  if (!isset($sandbox['progress'])) {
+    $count_query = ($count_query) ? $count_query : $query;
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = $count_query->count()->execute();
+    $sandbox['messages'] = array();
+  }
+
+  $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
+  $entity_ids = $query->execute();
+
+  $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
+  $entities = $storage_handler->loadMultiple($ids);
+  $storage_handler->delete($entities);
+  $sandbox['progress'] += count($entity_ids);
+
+  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
+    ? TRUE
+    : ($sandbox['progress'] / $sandbox['max']);
+
+  if ($sandbox['#finished']) {
+    return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
+  }
+
+}
 
 /**
  * Delete all entities of a given entity type.
