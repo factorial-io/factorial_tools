@@ -36,3 +36,17 @@ function mysite_deploy_update_8003(&$sandbox) {
   return factorial_tools_entities_delete($sandbox, 'user', $conditions);
 }
 ```
+
+*Optionally we have a helper function to delete entities by providing a entityQuery,*
+
+```
+/**
+ * Delete all users except Anonymous and Super Admin.
+ */
+function mysite_deploy_update_8004(&$sandbox) {
+  $query = \Drupal::entityQuery('user');
+  $query->condition('uid', [0,1], 'NOT IN');
+  return factorial_tools_entities_delete_by_query($sandbox, $query);
+}
+```
+
