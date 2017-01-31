@@ -1,0 +1,14 @@
+{
+  "name": "factorial-io/factorial_tools",
+  "type": "drupal-module",
+  "description": "A collection of useful tools",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://github.com/factorial-io/factorial_tools",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://github.com/factorial-io/factorial_tools/issues",
+    "source": "https://github.com/factorial-io/factorial_tools"
+  },
+  "require": { }
+}
