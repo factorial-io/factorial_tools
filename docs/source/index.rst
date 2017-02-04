@@ -3,14 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Factorial Tools's documentation!
-===========================================
+Factorial Tools
+===============
+
+Drupal Module that provides various commonly used helper functions
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
-
+   entity-delete
 
 Indices and tables
 ==================
