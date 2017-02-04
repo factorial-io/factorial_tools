@@ -12,10 +12,3 @@ Drupal Module that provides various commonly used helper functions
    :maxdepth: 1
 
    entity-delete
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
