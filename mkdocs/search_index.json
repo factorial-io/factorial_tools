@@ -1,0 +1,44 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Factorial Tools\n\n\nDrupal Module that provides various commonly used helper functions", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#factorial-tools", 
+            "text": "Drupal Module that provides various commonly used helper functions", 
+            "title": "Factorial Tools"
+        }, 
+        {
+            "location": "/entity-delete/", 
+            "text": "Entity Delete\n\n\n\n\nNote\n\n\nThese function are compatible with \nhook_update_N()\n.\n\n\n\n\nfactorial_tools_entities_delete()\n\n\nTo delete all entities of particular type use \nfactorial_tools_entities_delete()\n\n\nExamples\n\n\n?php\n\n/**\n * Delete all nodes.\n */\nfunction mysite_deploy_update_8001(\n$sandbox) {\n  return factorial_tools_entities_delete($sandbox, 'node');\n}\n\n/**\n * Delete all published nodes of type article.\n */\nfunction mysite_deploy_update_8002(\n$sandbox) {\n  $conditions = [\n   ['status', 1],\n   ['type', 'article'],\n  ];\n  return factorial_tools_entities_delete($sandbox, 'node', $conditions);\n}\n\n/**\n * Delete all users except uid 0 and uid 1.\n */\nfunction mysite_deploy_update_8003(\n$sandbox) {\n  $conditions = [\n   ['uid', [0,1], 'NOT IN'],\n  ];\n  return factorial_tools_entities_delete($sandbox, 'user', $conditions);\n}\n\n\n\n\nfactorial_tools_entities_delete_by_query()\n\n\nOptionally we have a helper function to delete entities by providing a \nDrupal::entityQuery\n.\n\n\nExamples\n\n\n?php\n\n/**\n * Delete all users except Anonymous and Super Admin.\n */\nfunction mysite_deploy_update_8004(\n$sandbox) {\n  $query = \\Drupal::entityQuery('user');\n  $query-\ncondition('uid', [0,1], 'NOT IN');\n  return factorial_tools_entities_delete_by_query($sandbox, $query);\n}", 
+            "title": "Entity delete"
+        }, 
+        {
+            "location": "/entity-delete/#entity-delete", 
+            "text": "Note  These function are compatible with  hook_update_N() .", 
+            "title": "Entity Delete"
+        }, 
+        {
+            "location": "/entity-delete/#factorial_tools_entities_delete", 
+            "text": "To delete all entities of particular type use  factorial_tools_entities_delete()", 
+            "title": "factorial_tools_entities_delete()"
+        }, 
+        {
+            "location": "/entity-delete/#examples", 
+            "text": "?php\n\n/**\n * Delete all nodes.\n */\nfunction mysite_deploy_update_8001( $sandbox) {\n  return factorial_tools_entities_delete($sandbox, 'node');\n}\n\n/**\n * Delete all published nodes of type article.\n */\nfunction mysite_deploy_update_8002( $sandbox) {\n  $conditions = [\n   ['status', 1],\n   ['type', 'article'],\n  ];\n  return factorial_tools_entities_delete($sandbox, 'node', $conditions);\n}\n\n/**\n * Delete all users except uid 0 and uid 1.\n */\nfunction mysite_deploy_update_8003( $sandbox) {\n  $conditions = [\n   ['uid', [0,1], 'NOT IN'],\n  ];\n  return factorial_tools_entities_delete($sandbox, 'user', $conditions);\n}", 
+            "title": "Examples"
+        }, 
+        {
+            "location": "/entity-delete/#factorial_tools_entities_delete_by_query", 
+            "text": "Optionally we have a helper function to delete entities by providing a  Drupal::entityQuery .", 
+            "title": "factorial_tools_entities_delete_by_query()"
+        }, 
+        {
+            "location": "/entity-delete/#examples_1", 
+            "text": "?php\n\n/**\n * Delete all users except Anonymous and Super Admin.\n */\nfunction mysite_deploy_update_8004( $sandbox) {\n  $query = \\Drupal::entityQuery('user');\n  $query- condition('uid', [0,1], 'NOT IN');\n  return factorial_tools_entities_delete_by_query($sandbox, $query);\n}", 
+            "title": "Examples"
+        }
+    ]
+}
