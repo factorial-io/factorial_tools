@@ -1,10 +1,5 @@
 # Entity Delete
 
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  | Content Cell
-
 !!! note
     These function are compatible with [hook_update_N()](https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Extension%21module.api.php/function/hook_update_N/8.2.x).
 
