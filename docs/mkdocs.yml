@@ -2,3 +2,5 @@ site_name: Factorial Tools
 theme: readthedocs
 markdown_extensions:
   - admonition
+
+repo_url: https://github.com/factorial-io/factorial_tools/
