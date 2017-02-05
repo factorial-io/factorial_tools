@@ -5,7 +5,7 @@ Entity Delete
    :maxdepth: 2
 
 .. note::
-  These function is compatible with `hook_update_N() <https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Extension%21module.api.php/function/hook_update_N/8.2.x>`_.
+  These function are compatible with `hook_update_N() <https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Extension%21module.api.php/function/hook_update_N/8.2.x>`_.
 
 factorial_tools_entities_delete()
 ---------------------------------
@@ -49,7 +49,7 @@ Examples
 factorial_tools_entities_delete_by_query()
 ------------------------------------------
 
-Optionally we have a helper function to delete entities by providing an `Drupal::entityQuery <https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/function/Drupal%3A%3AentityQuery/8.2.x>`_.
+Optionally we have a helper function to delete entities by providing a `Drupal::entityQuery <https://api.drupal.org/api/drupal/core%21lib%21Drupal.php/function/Drupal%3A%3AentityQuery/8.2.x>`_.
 
 Examples
 ^^^^^^^^
