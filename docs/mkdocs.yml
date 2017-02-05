@@ -4,3 +4,8 @@ markdown_extensions:
   - admonition
 
 repo_url: https://github.com/factorial-io/factorial_tools/
+repo_name: GitHub
+edit_uri: edit/8.x-1.x/docs/docs/
+site_description: "Factorial Tools - Drupal module Documentation"
+site_author: "Factorial GmbH, Hamburg"
+copyright: "© 2017 Factorial GmbH, Hamburg"
