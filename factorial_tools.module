@@ -23,7 +23,7 @@ use \Drupal\Core\Entity\Query\QueryInterface;
  */
 function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $query, QueryInterface $count_query = NULL) {
   if (!isset($sandbox['progress'])) {
-    $count_query = ($count_query) ? $count_query : $query;
+    $count_query = ($count_query) ? $count_query : clone $query;
     $sandbox['progress'] = 0;
     $sandbox['max'] = $count_query->count()->execute();
     $sandbox['messages'] = array();
@@ -34,7 +34,7 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
 
   $entity_type = $query->getEntityTypeId();
   $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
-  $entities = $storage_handler->loadMultiple($ids);
+  $entities = $storage_handler->loadMultiple($entity_ids);
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
 
@@ -45,7 +45,6 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
   if ($sandbox['#finished']) {
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
-
 }
 
 /**
