@@ -93,7 +93,7 @@ function _factorial_tools_create_entity_query($entity_type, $conditions = array(
   $query = \Drupal::entityQuery($entity_type);
   if ($conditions) {
     foreach ($conditions as $condition) {
-      list($field, $arg, $op) = $condition;
+      @list($field, $arg, $op) = $condition;
       if ($op === NULL) {
         $query->condition($field, $arg);
       }
