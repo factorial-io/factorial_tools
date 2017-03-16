@@ -38,11 +38,11 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['#finished']) {
+  if ($sandbox['finished']) {
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 }
@@ -76,11 +76,11 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['#finished']) {
+  if ($sandbox['finished']) {
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 
@@ -134,16 +134,16 @@ function factorial_tools_entities_apply_func_by_query($func, array &$sandbox, Qu
   $entity_type = $query->getEntityTypeId();
   $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
   $entities = $storage_handler->loadMultiple($entity_ids);
-  foreach ($entities as $entity) {
+  foreach ($entities as $ndx => $entity) {
     $func($entity);
   }
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['#finished']) {
+  if ($sandbox['finished']) {
     return t('Applied func on @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 }
