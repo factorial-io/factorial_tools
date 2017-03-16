@@ -108,7 +108,7 @@ function _factorial_tools_create_entity_query($entity_type, $conditions = array(
 /**
  * Work on entities that can be loaded using given query.
  *
- * @param Closure $func
+ * @param callable $func
  *   The function to call.
  * @param array $sandbox
  *   The $sandbox variable passed to hook_update_N.
@@ -120,7 +120,7 @@ function _factorial_tools_create_entity_query($entity_type, $conditions = array(
  * @return string
  *   Return value to be used for hook_update_N.
  */
-function factorial_tools_entities_apply_func_by_query($func, array &$sandbox, QueryInterface $query, QueryInterface $count_query = NULL) {
+function factorial_tools_entities_apply_func_by_query(callable $func, array &$sandbox, QueryInterface $query, QueryInterface $count_query = NULL) {
   if (!isset($sandbox['progress'])) {
     $count_query = ($count_query) ? $count_query : clone $query;
     $sandbox['progress'] = 0;
