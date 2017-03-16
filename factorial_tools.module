@@ -108,8 +108,8 @@ function _factorial_tools_create_entity_query($entity_type, $conditions = array(
 /**
  * Work on entities that can be loaded using given query.
  *
- * @param any $func
- *   The function to call
+ * @param Closure $func
+ *   The function to call.
  * @param array $sandbox
  *   The $sandbox variable passed to hook_update_N.
  * @param QueryInterface $query
