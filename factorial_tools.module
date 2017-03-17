@@ -38,11 +38,11 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['finished']) {
+  if ($sandbox['#finished']) {
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 }
@@ -76,11 +76,11 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['finished']) {
+  if ($sandbox['#finished']) {
     return t('Deleted @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 
@@ -139,11 +139,13 @@ function factorial_tools_entities_apply_func_by_query(callable $func, array &$sa
   }
   $sandbox['progress'] += count($entity_ids);
 
-  $sandbox['finished'] = ($sandbox['progress'] >= $sandbox['max'])
+  $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
 
-  if ($sandbox['finished']) {
+  print_r($sandbox);
+
+  if ($sandbox['#finished']) {
     return t('Applied func on @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 }
