@@ -29,7 +29,7 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
     $sandbox['messages'] = array();
   }
 
-  $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
+  $query->range($sandbox['progress'], FACTORIAL_TOOLS_BATCH_LIMIT);
   $entity_ids = $query->execute();
 
   $entity_type = $query->getEntityTypeId();
@@ -69,7 +69,7 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
   }
 
   $query = _factorial_tools_create_entity_query($entity_type, $conditions);
-  $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
+  $query->range($sandbox['progress'], FACTORIAL_TOOLS_BATCH_LIMIT);
   $entity_ids = $query->execute();
   $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
   $entities = $storage_handler->loadMultiple($entity_ids);
@@ -128,7 +128,7 @@ function factorial_tools_entities_apply_func_by_query(callable $func, array &$sa
     $sandbox['messages'] = array();
   }
 
-  $query->pager(FACTORIAL_TOOLS_BATCH_LIMIT);
+  $query->range($sandbox['progress'], FACTORIAL_TOOLS_BATCH_LIMIT);
   $entity_ids = $query->execute();
 
   $entity_type = $query->getEntityTypeId();
@@ -142,8 +142,6 @@ function factorial_tools_entities_apply_func_by_query(callable $func, array &$sa
   $sandbox['#finished'] = ($sandbox['progress'] >= $sandbox['max'])
     ? TRUE
     : ($sandbox['progress'] / $sandbox['max']);
-
-  print_r($sandbox);
 
   if ($sandbox['#finished']) {
     return t('Applied func on @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
