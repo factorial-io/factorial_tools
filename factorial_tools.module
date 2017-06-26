@@ -147,3 +147,46 @@ function factorial_tools_entities_apply_func_by_query(callable $func, array &$sa
     return t('Applied func on @count number of entities of type @type and given conditions.', array('@count' => $sandbox['progress'], '@type' => $entity_type));
   }
 }
+
+
+/**
+ * Get a menu as an array.
+ */
+/**
+ * Renders a menu html.
+ */
+function factorial_tools_get_menu_links($menu_name) {
+
+  $menu_tree = \Drupal::menuTree();
+  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+  $tree = $menu_tree->load($menu_name, $parameters);
+  // Transform the tree using the manipulators you want.
+  $manipulators = [
+    // Only show links that are accessible for the current user.
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    // Use the default sorting of menu links.
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ];
+  $tree = $menu_tree->transform($tree, $manipulators);
+  // Finally, build a renderable array from the transformed tree.
+  $menu = $menu_tree->build($tree);
+
+  $menu_arr = [];
+  if (!empty($menu['#items'])) {
+    foreach ($menu['#items'] as $link) {
+      $title = $link['title'];
+      $href = $link['url']->toString();
+      $menu_arr[] = [
+        'link' => [
+          'url' => $href,
+          'text' => $title,
+          'modifier' => empty($link['in_active_trail']) ? '' : 'is-active',
+        ],
+      ];
+    }
+  }
+
+  return $menu_arr;
+
+}
+
