@@ -88,7 +88,7 @@ class DefaultTwigExtension extends \Twig_Extension {
    * {@inheritdoc}
    */
   public function getName() {
-    return 'dzvier_twig_filter.twig.extension';
+    return 'factorial_tools.twig.extension';
   }
 
 }
