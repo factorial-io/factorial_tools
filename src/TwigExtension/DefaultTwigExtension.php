@@ -72,7 +72,8 @@ class DefaultTwigExtension extends \Twig_Extension {
   public function getFunctions() {
     return [
       new \Twig_SimpleFunction('patternlab_path', function () {
-        return base_path() . drupal_get_path('theme', 'dz4') . '/public';
+        $theme = \Drupal::service('theme.manager')->getActiveTheme();
+        return base_path() . $theme->getPath() . '/public';
       }),
     ];
   }
