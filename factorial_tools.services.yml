@@ -1,0 +1,7 @@
+services:
+  factorial_tools.twig.extension:
+    class: Drupal\factorial_tools\TwigExtension\DefaultTwigExtension
+    arguments: ["@renderer"]
+    tags:
+      - { name: twig.extension }
+
