@@ -177,11 +177,9 @@ function factorial_tools_get_menu_links($menu_name) {
       $title = $link['title'];
       $href = $link['url']->toString();
       $menu_arr[] = [
-        'link' => [
-          'url' => $href,
-          'text' => $title,
-          'modifier' => empty($link['in_active_trail']) ? '' : 'is-active',
-        ],
+        'url' => $href,
+        'text' => $title,
+        'modifier' => empty($link['in_active_trail']) ? '' : 'is-active',
       ];
     }
   }
