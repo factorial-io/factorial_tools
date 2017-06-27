@@ -73,7 +73,7 @@ class DefaultTwigExtension extends \Twig_Extension {
     return [
       new \Twig_SimpleFunction('patternlab_path', function () {
         $theme = \Drupal::service('theme.manager')->getActiveTheme();
-        return base_path() . $theme->getPath() . '/public';
+        return base_path() . $theme->getPath() . '/source';
       }),
     ];
   }
