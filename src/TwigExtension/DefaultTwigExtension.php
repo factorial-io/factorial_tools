@@ -3,6 +3,8 @@
 namespace Drupal\factorial_tools\TwigExtension;
 
 use Drupal\Core\Template\TwigExtension;
+use Drupal\file\Entity\File;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Class DefaultTwigExtension.
@@ -32,6 +34,7 @@ class DefaultTwigExtension extends \Twig_Extension {
     return [
       new \Twig_SimpleFilter('filtered', array($this, 'filterMarkup'), array('is_safe' => array('html'))),
       new \Twig_SimpleFilter('cacheOnly', array($this, 'cacheOnly'), array('is_safe' => array('html'))),
+      new \Twig_SimpleFilter('imageStyleUrl', array($this, 'imageStyleUrl', array('is_safe' => array('html'))))
     ];
   }
 
@@ -58,6 +61,13 @@ class DefaultTwigExtension extends \Twig_Extension {
     // If it's not an array return the input unhandled.
     return $input;
   }
+
+  public static function imageStyleUrl(File $file, $image_style_name) {
+    $original_image = $file->get('uri')->value;
+    $style = ImageStyle::load($image_style_name);  // Load the image style configuration entity.
+    return $style->buildUrl($original_image);
+  }
+
 
   /**
    * {@inheritdoc}
