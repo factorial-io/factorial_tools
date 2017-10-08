@@ -62,7 +62,10 @@ class DefaultTwigExtension extends \Twig_Extension {
     return $input;
   }
 
-  public static function imageStyleUrl(File $file, $image_style_name) {
+  public static function imageStyleUrl($file, $image_style_name) {
+    if (!$file instanceof File) {
+      return '';
+    }
     $original_image = $file->get('uri')->value;
     $style = ImageStyle::load($image_style_name);  // Load the image style configuration entity.
     return $style->buildUrl($original_image);
