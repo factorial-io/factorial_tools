@@ -33,7 +33,7 @@ function factorial_tools_entities_delete_by_query(&$sandbox, QueryInterface $que
   $entity_ids = $query->execute();
 
   $entity_type = $query->getEntityTypeId();
-  $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
+  $storage_handler = \Drupal::entityTypeManager()->getStorage($entity_type);
   $entities = $storage_handler->loadMultiple($entity_ids);
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
@@ -71,7 +71,7 @@ function factorial_tools_entities_delete(&$sandbox, $entity_type, $conditions = 
   $query = _factorial_tools_create_entity_query($entity_type, $conditions);
   $query->range($sandbox['progress'], FACTORIAL_TOOLS_BATCH_LIMIT);
   $entity_ids = $query->execute();
-  $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
+  $storage_handler = \Drupal::entityTypeManager()->getStorage($entity_type);
   $entities = $storage_handler->loadMultiple($entity_ids);
   $storage_handler->delete($entities);
   $sandbox['progress'] += count($entity_ids);
@@ -132,7 +132,7 @@ function factorial_tools_entities_apply_func_by_query(callable $func, array &$sa
   $entity_ids = $query->execute();
 
   $entity_type = $query->getEntityTypeId();
-  $storage_handler = \Drupal::entityManager()->getStorage($entity_type);
+  $storage_handler = \Drupal::entityTypeManager()->getStorage($entity_type);
   $entities = $storage_handler->loadMultiple($entity_ids);
   foreach ($entities as $ndx => $entity) {
     $func($entity);

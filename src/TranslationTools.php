@@ -15,16 +15,16 @@ class TranslationTools {
    * @param array $data
    *   Key-value array with source->translation mapping.
    * @param string $context
-   *    Optional context.
+   *   Optional context.
    */
   public static function add($language, array $data, $context = NULL) {
     /** @var \Drupal\locale\StringStorageInterface $local_storage */
     $local_storage = \Drupal::service('locale.storage');
 
     foreach ($data as $source => $target) {
-      $search = array(
+      $search = [
         'source' => $source,
-      );
+      ];
       if ($context) {
         $search['context'] = $context;
       }
@@ -35,11 +35,11 @@ class TranslationTools {
       }
       // Create translation for new string and save it as non-customized.
       if ($string) {
-        $data = array(
+        $data = [
           'lid' => $string->lid,
           'language' => $language,
           'translation' => $target,
-        );
+        ];
         if ($context) {
           $data['context'] = $context;
         }

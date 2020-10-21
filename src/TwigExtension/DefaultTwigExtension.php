@@ -2,7 +2,9 @@
 
 namespace Drupal\factorial_tools\TwigExtension;
 
-use Drupal\Core\Template\TwigExtension;
+use Twig\TwigFunction;
+use Twig\TwigFilter;
+use Twig\Extension\AbstractExtension;
 use Drupal\file\Entity\File;
 use Drupal\image\Entity\ImageStyle;
 
@@ -11,7 +13,7 @@ use Drupal\image\Entity\ImageStyle;
  *
  * @package Drupal\factorial_tools
  */
-class DefaultTwigExtension extends \Twig_Extension {
+class DefaultTwigExtension extends AbstractExtension {
 
   /**
    * {@inheritdoc}
@@ -32,9 +34,9 @@ class DefaultTwigExtension extends \Twig_Extension {
    */
   public function getFilters() {
     return [
-      new \Twig_SimpleFilter('filtered', array($this, 'filterMarkup'), array('is_safe' => array('html'))),
-      new \Twig_SimpleFilter('cacheOnly', array($this, 'cacheOnly'), array('is_safe' => array('html'))),
-      new \Twig_SimpleFilter('imageStyleUrl', array($this, 'imageStyleUrl', array('is_safe' => array('html'))))
+      new TwigFilter('filtered', [$this, 'filterMarkup'], ['is_safe' => ['html']]),
+      new TwigFilter('cacheOnly', [$this, 'cacheOnly'], ['is_safe' => ['html']]),
+      new TwigFilter('imageStyleUrl', [$this, 'imageStyleUrl', ['is_safe' => ['html']]]),
     ];
   }
 
@@ -62,15 +64,18 @@ class DefaultTwigExtension extends \Twig_Extension {
     return $input;
   }
 
+  /**
+   *
+   */
   public static function imageStyleUrl($file, $image_style_name) {
     if (!$file instanceof File) {
       return '';
     }
     $original_image = $file->get('uri')->value;
-    $style = ImageStyle::load($image_style_name);  // Load the image style configuration entity.
+    // Load the image style configuration entity.
+    $style = ImageStyle::load($image_style_name);
     return $style->buildUrl($original_image);
   }
-
 
   /**
    * {@inheritdoc}
@@ -84,7 +89,7 @@ class DefaultTwigExtension extends \Twig_Extension {
    */
   public function getFunctions() {
     return [
-      new \Twig_SimpleFunction('patternlab_path', function () {
+      new TwigFunction('patternlab_path', function () {
         $theme = \Drupal::service('theme.manager')->getActiveTheme();
         return base_path() . $theme->getPath() . '/source';
       }),
