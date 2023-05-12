@@ -44,7 +44,8 @@ class DefaultTwigExtension extends AbstractExtension {
    * {@inheritdoc}
    */
   public static function filterMarkup($string) {
-    $string_validate = is_string($string) ? $string : render($string);
+    $renderer = \Drupal::service('renderer');
+    $string_validate = is_string($string) ? $string : $renderer->render($string);
     $string_validate = check_markup($string_validate, 'limited_richtext');
     $string_validate = strip_tags($string_validate, '<a><br><em><strong>');
     return $string_validate;
