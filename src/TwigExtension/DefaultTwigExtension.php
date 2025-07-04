@@ -15,19 +15,7 @@ use Drupal\image\Entity\ImageStyle;
  */
 class DefaultTwigExtension extends AbstractExtension {
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getTokenParsers() {
-    return [];
-  }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getNodeVisitors() {
-    return [];
-  }
 
   /**
    * {@inheritdoc}
@@ -36,12 +24,12 @@ class DefaultTwigExtension extends AbstractExtension {
     return [
       new TwigFilter('filtered', [$this, 'filterMarkup'], ['is_safe' => ['html']]),
       new TwigFilter('cacheOnly', [$this, 'cacheOnly'], ['is_safe' => ['html']]),
-      new TwigFilter('imageStyleUrl', [$this, 'imageStyleUrl', ['is_safe' => ['html']]]),
+      new TwigFilter('imageStyleUrl', [$this, 'imageStyleUrl'], ['is_safe' => ['html']]),
     ];
   }
 
   /**
-   * {@inheritdoc}
+   * Filter the markup using `limited_richtext`.
    */
   public static function filterMarkup($string) {
     $renderer = \Drupal::service('renderer');
@@ -52,13 +40,13 @@ class DefaultTwigExtension extends AbstractExtension {
   }
 
   /**
-   * {@inheritdoc}
+   * Render only the cache tags.
    */
   public static function cacheOnly($input) {
     if (is_array($input)) {
       return [
         '#markup' => '',
-        '#cache' => isset($input['#cache']) ? $input['#cache'] : NULL,
+        '#cache' => $input['#cache'] ?? NULL,
       ];
     }
     // If it's not an array return the input unhandled.
@@ -66,7 +54,7 @@ class DefaultTwigExtension extends AbstractExtension {
   }
 
   /**
-   *
+   * Get an image style url.
    */
   public static function imageStyleUrl($file, $image_style_name) {
     if (!$file instanceof File) {
@@ -81,13 +69,6 @@ class DefaultTwigExtension extends AbstractExtension {
   /**
    * {@inheritdoc}
    */
-  public function getTests() {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getFunctions() {
     return [
       new TwigFunction('patternlab_path', function () {
@@ -95,13 +76,6 @@ class DefaultTwigExtension extends AbstractExtension {
         return base_path() . $theme->getPath() . '/source';
       }),
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOperators() {
-    return [];
   }
 
   /**
